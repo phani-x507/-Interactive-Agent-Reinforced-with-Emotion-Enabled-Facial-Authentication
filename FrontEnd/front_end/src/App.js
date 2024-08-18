@@ -1,12 +1,18 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
+import Example from './sidebar';
+import Loginpage from './Loginpage';
+import RegistrationPage from './RegistrationPage';
+import Registerface from './Registerface';
 
 function App() {
+  const buttonHandler = e => {
+    e.preventDefault();
+  }
+
   return (
-    <div>
-      <button  className='btn btn-secondary' > This is bootstrap button</button>
+    <div style={{ 'font-family': 'Poppins' }}>
+     <Registerface />
     </div>
   )
 }
