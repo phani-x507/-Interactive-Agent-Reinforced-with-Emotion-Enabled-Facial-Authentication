@@ -1,12 +1,26 @@
-import React from 'react'
+import React,{useState,useEffect}from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios'
+import { useNavigate,Link } from 'react-router-dom';
 
 function Loginpage() {
 
-  const login_handler = e =>{
+  const [uname,setUname] = useState("");
+  const [pass,setPass] =  useState("");
+  const history = useNavigate();
+
+
+  const  login_handler = async (e) =>{
     e.preventDefault()
-    alert("Welcome")
+    try{
+      await axios.post('http://localhost:3500/login_user',{
+        uname,pass
+      }).then(res => console.log(res.data))
+    }catch(e){
+
+    }
   }
+
 
   return (
     <div >
@@ -28,12 +42,12 @@ function Loginpage() {
                 <form onSubmit={login_handler}>
                 <div className=' p-2 d-flex align-items-center  justify-content-center  '>
                 <img src='https://cdn-icons-png.flaticon.com/512/5087/5087579.png' className='mx-2' alt=''style={{'max-height':'30px'}} />
-                <input type='text' className='textbox1 w-50'  placeholder='Enter Username' />
+                <input type='text' className='textbox1 w-50' value={uname} onChange={e=>setUname(e.target.value)}  placeholder='Enter Username' />
             </div>
 
             <div className=' p-2 d-flex align-items-center justify-content-center ' >
                 <img src='https://icons.veryicon.com/png/o/miscellaneous/remitting-country-linear-icon/password-148.png' alt='' className='mx-2' style={{'max-height':'30px'}} />
-                <input type='password' className='textbox1 w-50' placeholder='Enter Password' />
+                <input type='password' className='textbox1 w-50' value={pass}  onChange={e=>setPass(e.target.value)}  placeholder='Enter Password' />
             </div>
 
             <p className='p-4 h6 '><small>Enter Captcha</small></p>

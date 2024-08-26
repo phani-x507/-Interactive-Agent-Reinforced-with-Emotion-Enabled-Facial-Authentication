@@ -1,23 +1,24 @@
 import React, { useState } from 'react'
 import Webcam from "react-webcam";
-
-const WebcamComponent = () => <Webcam />;
+import { useLocation,useNavigate } from 'react-router-dom';
 
 const videoConstraints = {
-    width: 220,
-    height: 200,
+    width: 800,
+    height: 800,
     facingMode: "user"
 };
 
 
 function Registerface() {
+
+    const location = useLocation()
     const [image, setImage] = useState('');
     const webcamRef = React.useRef(null);
-
 
     const capture = React.useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setImage(imageSrc);
+        console.log(imageSrc)
       }, [webcamRef]);
 
     return (
@@ -56,9 +57,10 @@ function Registerface() {
                                         <button onClick={(e) => {
                                             e.preventDefault();
                                             capture();
+
                                         }}
 
-                                            className="webcam-btn">Capture</button>
+                                            className="webcam-btn btn btn-success">Capture</button>
                                     }
                                 </div>
                             </div>

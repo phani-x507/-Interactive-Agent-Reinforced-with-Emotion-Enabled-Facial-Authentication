@@ -1,7 +1,33 @@
-import React from 'react'
+import React,{useState,useEffect}from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
+import { useNavigate,Link } from 'react-router-dom';
 
 function RegistrationPage() {
+    const [uname,setUname] = useState("")
+    const [pass,setPass] = useState("")
+    const [fullname,setFullname] = useState("")
+    const [mobileno,Setmobile] = useState("")
+    const [email,setEmail] = useState("")
+    const reg_submit = async(e) =>{
+        e.preventDefault();
+    try{
+        await axios.post("http://127.0.0.1:3500/register_user",{
+            uname,pass,fullname,mobileno,email
+        }).then(res => {
+            if (res.data['response'] === "done"){
+                alert("Insertion Successfull")
+            }else if(res.data['response'] !== "done"){
+                alert("there must be an error " + res.data['response'])
+            }
+        })
+    }catch(e){
+        alert("Error in details")
+    }
+
+    }
+    
+
     return (
         <div >
             <div className='container-fluid  '>
@@ -19,34 +45,34 @@ function RegistrationPage() {
                             {/* <p className='lead fs-6 text-secondary px-4' >Username : </p> */}
 
                             <p className='px-5'>Please Fill The Details</p>
-                            <form >
+                            <form onSubmit={reg_submit} >
                                 {/* Full Name  */}
                                 <div className=' p-2 d-flex align-items-center justify-content-center   '>
                                     <img src='https://cdn-icons-png.flaticon.com/512/5087/5087579.png' className='mx-2' alt='' style={{ 'max-height': '30px' }} />
-                                    <input type='text' className='textbox1 w-50' placeholder='Fullname' />
+                                    <input type='text' className='textbox1 w-50' value={fullname} onChange={e=>setFullname(e.target.value)} placeholder='Fullname' />
                                 </div>
 
                                 {/* Username  */}
                                 <div className=' p-2 d-flex align-items-center justify-content-center    '>
                                     <img src='https://cdn-icons-png.flaticon.com/512/5087/5087579.png' className='mx-2' alt='' style={{ 'max-height': '30px' }} />
-                                    <input type='text' className='textbox1 w-50' placeholder='Username' />
+                                    <input type='text' className='textbox1 w-50' value={uname} onChange={e=>setUname(e.target.value)} placeholder='Username' />
                                 </div>
                                 {/* Mobile Number */}
                                 <div className=' p-2 d-flex align-items-center justify-content-center  ' >
                                     <img src='https://static.vecteezy.com/system/resources/previews/011/047/522/non_2x/smartphone-and-mobile-phone-free-png.png' alt='' className='mx-2' style={{ 'max-height': '30px' }} />
-                                    <input type='number' className='textbox1 w-50' placeholder='Mobile Number' />
+                                    <input type='number' className='textbox1 w-50' value={mobileno} onChange={e=>Setmobile(e.target.value)} placeholder='Mobile Number' />
                                 </div>
 
                                 {/* Password */}
                                 <div className=' p-2 d-flex align-items-center justify-content-center  ' >
                                     <img src='https://static.vecteezy.com/system/resources/previews/021/454/517/non_2x/email-confirmation-app-icon-email-icon-free-png.png' alt='' className='mx-2' style={{ 'max-height': '30px' }} />
-                                    <input type='email' className='textbox1 w-50' placeholder='Email' />
+                                    <input type='email' className='textbox1 w-50' value={email} onChange={e=> setEmail(e.target.value)} placeholder='Email' />
                                 </div>
 
                                 {/* Password */}
                                 <div className=' p-2 d-flex align-items-center justify-content-center  ' >
                                     <img src='https://icons.veryicon.com/png/o/miscellaneous/remitting-country-linear-icon/password-148.png' alt='' className='mx-2' style={{ 'max-height': '30px' }} />
-                                    <input type='password' className='textbox1 w-50' placeholder='Enter Password' />
+                                    <input type='password' className='textbox1 w-50' value={pass} onChange={e=>setPass(e.target.value)} placeholder='Enter Password' />
                                 </div>
 
                                 {/* Password */}
